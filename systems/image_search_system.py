@@ -123,6 +123,8 @@ class ImageSearch_System:
         # Load features list and image paths list from the respective opened files
         features = load(features_file)
         image_paths = load(image_paths_file)
+        print("features_file" + str(features))
+        print("image_paths_file"+ str(image_paths))
 
         if isinstance(query_image, str):  # If query image is a path (string type)
             query_image = Image.open(query_image)  # Open query image at image path
@@ -241,7 +243,7 @@ class ImageSearch_System:
         result_file = open(result_file_path, 'a')
 
         # Write header line
-        result_file.write('-' * 20 + 'START EVALUATING' + '-' * 20 + '\n\n')
+        result_file.write('-' * 20 + 'EVALUATING ' + str(result_file_path) + '-' * 20 + '\n\n')
 
         # Start counting time of evaluating
         start = time.time()
@@ -314,7 +316,7 @@ class ImageSearch_System:
         end = time.time()
 
         # Write footer line
-        result_file.write('\n' + '-' * 19 + 'FINISH EVALUATING' + '-' * 20 + '\n\n')
+        result_file.write('\n' + '-' * 19 + 'EVALUATING ' + str(result_file_path)+ '-' * 20 + '\n\n')
 
         # Calculate non - interpolated and interpolated MAP
         nMAP = np.mean(np.array(nAPs))
