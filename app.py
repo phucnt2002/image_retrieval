@@ -46,7 +46,7 @@ def return_res():
         "query.jpg"
     ))
 
-    method = "VGG16"
+    method = "VGG19"
 
     img_query = cv2.imread("query.jpg")[y:y+height, x:x+width]
 

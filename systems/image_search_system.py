@@ -15,28 +15,16 @@ except:
 
 
 class ImageSearch_System:
-    def __init__(self, dataset_name='oxbuild', method='VGG16') -> None:
+    def __init__(self, dataset_name='oxbuild', method='VGG19') -> None:
         # Select feature extractor based on corresponding method
-        if method == 'VGG16':
-            self.feature_extractor = fe.VGG16_FE()
-        elif method == 'Xception':
+        if method == 'Xception':
             self.feature_extractor = fe.Xception_FE()
-        elif method == 'InceptionV3':
-            self.feature_extractor = fe.InceptionV3_FE()
-        elif method == 'ResNet152V2':
-            self.feature_extractor = fe.ResNet152V2_FE()
-        elif method == 'EfficientNetV2L':
-            self.feature_extractor = fe.EfficientNetV2L_FE()#long time
         elif method == 'InceptionResNetV2':
             self.feature_extractor = fe.InceptionResNetV2_FE()
         elif method == 'VGG19':
             self.feature_extractor = fe.VGG19_FE()
-        elif method == 'MobileNetV2':
-            self.feature_extractor = fe.MobileNetV2_FE()#so fast
         elif method == 'DenseNet121':
             self.feature_extractor = fe.DenseNet121_FE()
-        elif method == 'MobileNetV3Small':
-            self.feature_extractor = fe.MobileNetV3Small_FE()
         elif method == 'NasNetMobile':
             self.feature_extractor = fe.NasNetMobile_FE()
 
