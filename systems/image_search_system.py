@@ -89,8 +89,8 @@ class ImageSearch_System:
                     continue
 
             # Open features file and image paths file to write
-            features_file = Path(features_file_path, 'wb')
-            image_paths_file = Path(image_paths_file_path, 'wb')
+            features_file = open(features_file_path, 'wb')
+            image_paths_file = open(image_paths_file_path, 'wb')
 
             # Save features list and image paths list to the respective opened files
             dump(features, features_file)
@@ -111,8 +111,6 @@ class ImageSearch_System:
         # Load features list and image paths list from the respective opened files
         features = load(features_file)
         image_paths = load(image_paths_file)
-        print("features_file" + str(features))
-        print("image_paths_file"+ str(image_paths))
 
         if isinstance(query_image, str):  # If query image is a path (string type)
             query_image = Image.open(query_image)  # Open query image at image path
@@ -231,7 +229,7 @@ class ImageSearch_System:
         result_file = open(result_file_path, 'a')
 
         # Write header line
-        result_file.write('-' * 20 + 'EVALUATING ' + str(result_file_path) + '-' * 20 + '\n\n')
+        result_file.write('-' * 20 + 'EVALUATING ' + f'{self.dataset_folder_path.stem}_{self.method}_evaluation' + '-' * 20 + '\n\n')
 
         # Start counting time of evaluating
         start = time.time()
@@ -291,7 +289,7 @@ class ImageSearch_System:
                 iAPs.append(iAP)
 
             # Write id and name of query file
-            result_file.write(f'+ Query {(id + 1):2d}: {Path(query_file).stem}.txt\n')
+            result_file.write(f'*** Query {(id + 1):2d}: {Path(query_file).stem}.txt\n')
 
             # Write non - interpolated and interpolated AP
             result_file.write(' ' * 12 + f'Non - Interpolated Average Precision = {nAP:.2f}\n')
@@ -304,21 +302,22 @@ class ImageSearch_System:
         end = time.time()
 
         # Write footer line
-        result_file.write('\n' + '-' * 19 + 'EVALUATING ' + str(result_file_path)+ '-' * 20 + '\n\n')
+        result_file.write('\n' + '-' * 19 + 'EVALUATING ' + f'{self.dataset_folder_path.stem}_{self.method}_evaluation.txt' + 'SUCCESSFULLY'+ '-' * 20 + '\n\n')
 
         # Calculate non - interpolated and interpolated MAP
         nMAP = np.mean(np.array(nAPs))
         iMAP = np.mean(np.array(iAPs))
+        result_file.write(f'Summary:\n')
         
         # Write total number of queries
         result_file.write(f'Total number of queries = {len(queries_file)}\n')
 
         # Write non - interpolated and interpolated MAP
-        result_file.write(f'Non - Interpolated Mean Average Precision = {nMAP:.2f}\n')
-        result_file.write(f'Interpolated Mean Average Precision = {iMAP:.2f}\n')
+        result_file.write(f'Non - Interpolated Mean Average Precision (nMAP) = {nMAP:.2f}\n')
+        result_file.write(f'Interpolated Mean Average Precision (iMAP) = {iMAP:.2f}\n')
 
         # Write evaluating time
-        result_file.write(f'Evaluating Time = {(end - start):2.2f}s')
+        result_file.write(f'Total Time = {(end - start):2.2f}s')
 
         # Close result file
         result_file.close()
