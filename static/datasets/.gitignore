@@ -1,4 +1,7 @@
 # Not commit everything in this directory
 # !paris/results/
 # Except .gitignore file
+*
+!oxbuild/results/
+!paris/results/
 !.gitignore
