@@ -1,151 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Image retrieval</title>
-    <link rel="icon" type="image/x-icon" href="/static/source/shortcut_logo.png">
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link rel="stylesheet" href="/static/frontend/css/cropper.css">
-    <link href="/static/frontend/css/styles.css" rel="stylesheet">
-    <link href="/static/frontend/css/style_beautified.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </head>
 
-  <body>
-    <div class="content_page">
-      <div class="web_name" style="text-align: center">
-        <img class="img_logo" src="/static/source/logofull.png" alt="logo" />
-      </div>
-      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="../static/source/flask.png" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="../static/source/opencv.png" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="../static/source/tensor.png" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="../static/source/keras.png" class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-      <div class="modify">
-        <form action="/result" method="post" enctype="multipart/form-data">
-          <div class="topk_method">
+<head>
+  <title>Image retrieval</title>
+  <link rel="icon" type="image/x-icon" href="/static/source/shortcut_logo.png">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/static/frontend/css/cropper.css">
+  <link rel="stylesheet" href="/static/frontend/css/app.css">
+  <link href="/static/frontend/css/styles.css" rel="stylesheet">
+  <!-- <link href="/static/frontend/css/style_beautified.css" rel="stylesheet"> -->
+  <link href="/static/frontend/css/app.css" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</head>
+<style>
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
 
-            <div class="topk">
-              <div class="slidecontainer">
-                <label for="volume" style="margin-bottom: 10px"
-                  >Số lượng ảnh liên quan</label
-                >
-                <div class="range_value">
-                  <input
-                    type="range"
-                    min="8"
-                    max="50"
-                    step="4"
-                    class="slider"
-                    id="myRange"
-                    name="K"
-                    value="20"
-                  />
-                  <div class="value_box">
-                    <span id="demo"></span>
+  .section {
+    width: 45%;
+    margin-bottom: 20px;
+  }
+
+  hr.divider {
+    margin: 10px 0;
+    border: 1px solid #ccc;
+  }
+</style>
+
+<body>
+  <header class="header header_desktop header p-4 border-bottom d-none d-lg-block">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+
+        <div class="header_left d-flex align-items-center">
+
+          <div class="header_logo me-3">
+            <div class="container p-0">
+              <div style="text-align: center">
+                <img src="/static/source/logofull.png" style="width: 300px; height: 75px;" alt="logo" />
+              </div>
+            </div>
+          </div>
+
+          <div class="header_right d-flex align-items-center" style="margin-left: 700px;">
+
+            <div class="header_search me-4">
+              <button type="button" data-bs-toggle="modal" data-bs-target="#searchModal">
+                <i class="bx bx-search"></i>
+                <span>Tìm kiếm</span>
+              </button>
+            </div>
+
+            <!-- <div class="header_option header_cart me-4">
+        <a href="/">
+          <i class="bx bx-cart"></i>
+          <span>Giỏ hàng</span>
+        </a>
+      </div> -->
+
+            <div class="header_option header_account">
+              <a href="">
+                <i class="bx bx-user"></i>
+                <span>Tài khoản</span>
+              </a>
+            </div>
+
+            <!-- <div class="header_dropdown">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser1">
+          <li><a class="dropdown-item" href="#">Tài Khoản</a></li>
+          <li><a class="dropdown-item" href="#">Đơn Hàng</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">Đăng Xuất</a></li>
+        </ul>
+      </div> -->
+
+
+          </div>
+
+        </div>
+
+      </div>
+  </header>
+
+  <header class="header header_mobile header py-3 px-1 mb-3 border-bottom d-block d-lg-none">
+
+    <div class="container">
+
+      <div class="header_top">
+        <div class="header_logo">
+          <a href="/views/home.html">
+            <img src="../assets/logo-waka.png" alt="">
+          </a>
+        </div>
+      </div>
+
+      <div class="header_bottom d-flex justify-content-between align-items-center">
+
+        <div class="header_left">
+
+          <div class="header_option header_menu">
+            <a role="button" class="ico_menu">
+              <i class='bx bx-category'></i>
+            </a>
+
+            <aside class="header_catalogue">
+              <div class="header_catalogue_containter">
+
+                <div class="header_catalogue_header border-bottom">
+
+                  <div class="header_catalogue_title">
+                    <i class="bx bx-category"></i><span>Danh Mục</span>
+                  </div>
+
+                  <div class="header_catalogue_close">
+                    <a role="button" class="ico_close">
+                      <i class="bx bx-x"></i>
+                    </a>
+                  </div>
+
+                </div>
+
+                <div class="header_catalogue_body">
+                  <ul>
+                    <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Kỹ
+                        năng sống</a></li>
+                    <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Kinh
+                        tế</a></li>
+                    <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Tiểu
+                        thuyết</a></li>
+                    <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Văn
+                        học</a></li>
+                  </ul>
+                </div>
+
+              </div>
+            </aside>
+
+          </div>
+
+        </div>
+
+        <div class="header_center mx-4">
+          <div class="header_search">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#searchModal">
+              <i class="bx bx-search"></i>
+              <span>Tìm kiếm</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="header_right d-flex align-items-center">
+
+          <div class="header_option header_cart me-2">
+            <a href="">
+              <i class="bx bx-cart"></i>
+            </a>
+          </div>
+
+          <div class="header_option header_account">
+            <a href="">
+              <i class="bx bx-user"></i>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+
+          <div class="search-form">
+            <div class="search-form_header">
+              <span class="search-form_icon search-form_icon--search"><i class="bx bx-search"></i></span>
+              <a class="search-form_icon search-form_icon--close" role="button"><i class="bx bx-x"></i></a>
+              <input type="text" class="search-form_input" placeholder="Nhập tên sách" />
+            </div>
+
+            <div class="search-form_body">
+
+              <div class="search-form_result">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- slider -->
+  <section>
+
+    <h1 class="headerTitle font-size" style="margin-left: 280px;">TECHNOLOGY IN USE OUR PROJECT</h1>
+    <div class="technologyImg">
+      <div class="technologyImg-item active" style="margin-left: 470px;">
+        <img src="../static/source/flask.png" style="height: 100%; width: 100%;" alt="...">
+      </div>
+      <div class="technologyImg-item active">
+        <img src="../static/source/python.png" style="height: 100%; width: 85%;" alt="...">
+      </div>
+      <div class="technologyImg-item active">
+        <img src="../static/source/opencv.png" style="height: 100%; width: 90%;" alt="...">
+      </div>
+      <div class="technologyImg-item active">
+        <img src="../static/source/tensor.png" style="height: 110%; width: 140%;" alt="...">
+      </div>
+      <div class="technologyImg-item active">
+        <img src="../static/source/keras.png" style="height: 70%; width: 170%;margin-left: 70px;margin-top: 35px;"
+          alt="...">
+      </div>
+    </div>
+  </section>
+
+  <div class="wrapper">
+    <section class="section" style="margin-left: 50px;">
+      <div class="container mt-5 shadow-sm">
+        <div class="row">
+          <div class="box py-4 px-4">
+            <div class="box_header d-flex justify-content-between align-items-center">
+            </div>
+            <div>
+              <hr class="divider">
+            </div>
+            <div class="box_content">
+              <div class="row">
+                <div class="col-12">
+                  <!-- Content for the first section -->
+                  <div class="topk_method">
+                    <div class="topk">
+                      <div class="slidecontainer">
+                        <label for="volume" class="font-size" style="margin-bottom: 10px">Number
+                          of results</label>
+                        <div class="range_value">
+                          <div class="value_box">
+                            <span class="font-size">8</span>
+                          </div>
+                          <input style="width: 100%; margin-left: 8px;" type="range" min="8" max="50" step="4"
+                            class="slider" id="myRange" name="K" value="20" />
+                          <div class="value_box">
+                            <span class="font-size" id="demo"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <script>
+                        var slider = document.getElementById("myRange");
+                        var output = document.getElementById("demo");
+                        output.innerHTML = slider.value;
+
+                        slider.oninput = function () {
+                          output.innerHTML = this.value;
+                        };
+                      </script>
+                      <div class="method_box">
+                        <label class="font-size" for="method" style="margin-bottom: 10px">Chọn
+                          tập dữ liệu</label>
+                        <select name="dataset" id="method">
+                          <option class="w" value="oxbuild">Oxford Buildings</option>
+                          <option class="w" value="paris">Paris Buildings</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <script>
-                var slider = document.getElementById("myRange");
-                var output = document.getElementById("demo");
-                output.innerHTML = slider.value;
-
-                slider.oninput = function () {
-                  output.innerHTML = this.value;
-                };
-              </script>
-            </div>
-            <div class="method_box">
-              <label for="method" style="margin-bottom: 10px">Chọn tập dữ liệu</label>
-              <select name="dataset" id="method">
-                <option class="w" value="oxbuild">Oxford Buildings</option>
-                <option class="w" value="paris">Paris Buildings</option>
-              </select>
             </div>
           </div>
-
-          <input id="alert-no-file" hidden="true" value={{ALERT}}>
-
-          <div id="alert-section">
-
-          </div>
-
-          <div class="browser_pic">
-            <label for="img_file">Chọn ảnh</label>
-            <input type="file" id="img_file" name="uploaded_img" hidden="true" />
-            <input type="file" id="real_img_file" name="real_uploaded_img" hidden="true" />
-
-            <input type="text" id="x_coor" name="x" hidden="true">
-            <input type="text" id="y_coor" name="y" hidden="true">
-            <input type="text" id="img_height" name="img_height" hidden="true">
-            <input type="text" id="img_width" name="img_width" hidden="true">
-            <input type="text" id="image-url" name="image_url" hidden="true">
-          </div>
-
-          <div class="text-center cropped-image-div ">
-            <img src="" class="cropped-image">
-            <p class="input-status">Chưa chọn ảnh</p>
-          </div>
-
-          <button type="submit" class="btn btn-primary seach-btn">Tìm ảnh</button>
-
-          <!-- <button type="submit" id="seach-btn">Search by image</button> -->
-        </form>
+        </div>
       </div>
 
-      {% block modal %}{% endblock %}
+    </section>
 
-    </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="/static/frontend/js/cropper.js"></script>
-    <script src="/static/frontend/js/main-script.js"></script>
-    <script src="/static/frontend/js/index.js"></script>
+    <section class="section" style="margin-right: 50px;">
+      <div class="container mt-5 shadow-sm">
+        <div class="row">
+          <div class="box py-4 px-4">
+            <div class="box_header d-flex justify-content-between align-items-center">
+            </div>
+            <div>
+              <hr class="divider">
+            </div>
+            <div class="box_content">
+              <div class="row">
+                <div class="col-12">
+                  <!-- Content for the second section -->
+                  <div class="browser_pic">
+                    <label class="font-size btn btn-primary font-size" style="font-size: 20px; font-weight: bold;" for="img_file">Select Image</label>
+                    <input type="file" id="img_file" name="uploaded_img" hidden="true" />
+                    <input type="file" id="real_img_file" name="real_uploaded_img" hidden="true" />
 
-  </body>
+                    <input type="text" id="x_coor" name="x" hidden="true">
+                    <input type="text" id="y_coor" name="y" hidden="true">
+                    <input type="text" id="img_height" name="img_height" hidden="true">
+                    <input type="text" id="img_width" name="img_width" hidden="true">
+                    <input type="text" id="image-url" name="image_url" hidden="true">
+                  </div>
+
+                  <div class="text-center font-size cropped-image-div">
+                    <img src="" class="cropped-image">
+                    <p class="input-status">Please choose image</p>
+                  </div>
+
+                  <button type="submit" class="btn btn-success font-size search-btn" style="font-size: 20px; font-weight: bold;">Search
+                    image</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  {% block modal %}{% endblock %}
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="/static/frontend/js/cropper.js"></script>
+  <script src="/static/frontend/js/main-script.js"></script>
+  <script src="/static/frontend/js/index.js"></script>
+
+</body>
+
 </html>
