@@ -26,7 +26,7 @@
 <style>
   .wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .section {
@@ -238,102 +238,72 @@
   </section>
 
   <div class="wrapper">
-    <section class="section" style="margin-left: 50px;">
-      <div class="container mt-5 shadow-sm">
-        <div class="row">
-          <div class="box py-4 px-4">
-            <div class="box_header d-flex justify-content-between align-items-center">
-            </div>
-            <div>
-              <hr class="divider">
-            </div>
-            <div class="box_content">
-              <div class="row">
-                <div class="col-12">
-                  <!-- Content for the first section -->
-                  <div class="topk_method">
-                    <div class="topk">
-                      <div class="slidecontainer">
-                        <label for="volume" class="font-size" style="margin-bottom: 10px">Number
-                          of results</label>
-                        <div class="range_value">
-                          <div class="value_box">
-                            <span class="font-size">8</span>
-                          </div>
-                          <input style="width: 100%; margin-left: 8px;" type="range" min="8" max="50" step="4"
-                            class="slider" id="myRange" name="K" value="20" />
-                          <div class="value_box">
-                            <span class="font-size" id="demo"></span>
-                          </div>
-                        </div>
-                      </div>
-                      <script>
-                        var slider = document.getElementById("myRange");
-                        var output = document.getElementById("demo");
-                        output.innerHTML = slider.value;
-
-                        slider.oninput = function () {
-                          output.innerHTML = this.value;
-                        };
-                      </script>
-                      <div class="method_box">
-                        <label class="font-size" for="method" style="margin-bottom: 10px">Chọn
-                          tập dữ liệu</label>
-                        <select name="dataset" id="method">
-                          <option class="w" value="oxbuild">Oxford Buildings</option>
-                          <option class="w" value="paris">Paris Buildings</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
+    <div class="modify">
+      <form action="/result" method="post" enctype="multipart/form-data">
+        <div class="topk_method">
+          <div class="topk">
+            <div class="slidecontainer">
+              <label for="volume" style="margin-bottom: 10px">Số lượng ảnh liên quan</label>
+              <div class="range_value">
+                <input
+                  type="range"
+                  min="8"
+                  max="50"
+                  step="4"
+                  class="slider"
+                  id="myRange"
+                  name="K"
+                  value="20"
+                />
+                <div class="value_box">
+                  <span id="demo"></span>
                 </div>
               </div>
             </div>
+            <script>
+              var slider = document.getElementById("myRange");
+              var output = document.getElementById("demo");
+              output.innerHTML = slider.value;
+    
+              slider.oninput = function () {
+                output.innerHTML = this.value;
+              };
+            </script>
+          </div>
+          <div class="method_box">
+            <label for="method" style="margin-bottom: 10px">Chọn tập dữ liệu</label>
+            <select name="dataset" id="method">
+              <option class="w" value="oxbuild">Oxford Buildings</option>
+              <option class="w" value="paris">Paris Buildings</option>
+            </select>
           </div>
         </div>
-      </div>
-
-    </section>
-
-    <section class="section" style="margin-right: 50px;">
-      <div class="container mt-5 shadow-sm">
-        <div class="row">
-          <div class="box py-4 px-4">
-            <div class="box_header d-flex justify-content-between align-items-center">
-            </div>
-            <div>
-              <hr class="divider">
-            </div>
-            <div class="box_content">
-              <div class="row">
-                <div class="col-12">
-                  <!-- Content for the second section -->
-                  <div class="browser_pic">
-                    <label class="font-size btn btn-primary font-size" style="font-size: 20px; font-weight: bold;" for="img_file">Select Image</label>
-                    <input type="file" id="img_file" name="uploaded_img" hidden="true" />
-                    <input type="file" id="real_img_file" name="real_uploaded_img" hidden="true" />
-
-                    <input type="text" id="x_coor" name="x" hidden="true">
-                    <input type="text" id="y_coor" name="y" hidden="true">
-                    <input type="text" id="img_height" name="img_height" hidden="true">
-                    <input type="text" id="img_width" name="img_width" hidden="true">
-                    <input type="text" id="image-url" name="image_url" hidden="true">
-                  </div>
-
-                  <div class="text-center font-size cropped-image-div">
-                    <img src="" class="cropped-image">
-                    <p class="input-status">Please choose image</p>
-                  </div>
-
-                  <button type="submit" class="btn btn-success font-size search-btn" style="font-size: 20px; font-weight: bold;">Search
-                    image</button>
-                </div>
-              </div>
-            </div>
-          </div>
+    
+        <input id="alert-no-file" hidden="true" value={{ALERT}}>
+    
+        <div id="alert-section"></div>
+    
+        <div class="browser_pic">
+          <label for="img_file">Chọn ảnh</label>
+          <input type="file" id="img_file" name="uploaded_img" hidden="true" />
+          <input type="file" id="real_img_file" name="real_uploaded_img" hidden="true" />
+    
+          <input type="text" id="x_coor" name="x" hidden="true">
+          <input type="text" id="y_coor" name="y" hidden="true">
+          <input type="text" id="img_height" name="img_height" hidden="true">
+          <input type="text" id="img_width" name="img_width" hidden="true">
+          <input type="text" id="image-url" name="image_url" hidden="true">
         </div>
-      </div>
-    </section>
+    
+        <div class="text-center cropped-image-div">
+          <img src="" class="cropped-image">
+          <p class="input-status">Chưa chọn ảnh</p>
+        </div>
+    
+        <button type="submit" class="btn btn-primary seach-btn">Tìm ảnh</button>
+      </form>
+    </div>
+    
   </div>
 
   {% block modal %}{% endblock %}
