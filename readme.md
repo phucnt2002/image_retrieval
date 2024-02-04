@@ -30,11 +30,6 @@
 - **Introduction to the topic:** Image retrieval is a computer vision task focused on finding and retrieving images from a database based on visual content. It involves extracting features from images, creating an efficient index, and comparing similarities. This process is applied in content-based image retrieval (CBIR) for applications like art, medicine, fashion, and e-commerce.
 
 # Demo
+- ** Video demo: https://drive.google.com/file/d/1P8NhHzy_j-iF3dJ9cbWcIRYoyIQfdUOe/view?usp=sharing
+- ** Report: https://drive.google.com/file/d/1xW5E5GBCfq3a3_4z6WltZdbm91otGB4Q/view?usp=sharing
 
-<!-- Video Demo -->
-<p align="center">
-  <video width="640" height="360" controls>
-    <source src="Demo.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</p>
